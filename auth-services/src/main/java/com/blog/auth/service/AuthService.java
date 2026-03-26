@@ -32,7 +32,7 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEnabled(true);
-
+        System.out.println(user.getName());
         Role role = roleRepository.findByRoleName("ROLE_USER").get();
 
         Set<Role> roles = new HashSet<>();

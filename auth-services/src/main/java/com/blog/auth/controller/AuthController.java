@@ -3,6 +3,7 @@ package com.blog.auth.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.blog.auth.dto.LoginRequest;
 import com.blog.auth.dto.RegisterRequest;
 import com.blog.auth.service.AuthService;
 
@@ -14,7 +15,13 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
-        return authService.register(request);
+    public String register(@RequestBody RegisterRequest request) 
+    {
+        authService.register(request);
+        return "register successful";
+    }
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest request) {
+        return "Login Success";
     }
 }
