@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
+
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -24,7 +25,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-
+       System.out.print(false);
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {

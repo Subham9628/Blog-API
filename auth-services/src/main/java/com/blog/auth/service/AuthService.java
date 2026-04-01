@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.blog.auth.dto.LoginRequest;
 import com.blog.auth.dto.RegisterRequest;
 import com.blog.auth.entity.Role;
 import com.blog.auth.entity.User;
@@ -25,23 +26,35 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String register(RegisterRequest request) {
-
+    public String register(RegisterRequest request) 
+    {
+    
+    	if(userRepository.findByEmail(request.getEmail()).isPresent()) 
+    	{
+            return "Email already registered!";
+    }
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEnabled(true);
-        System.out.println(user.getName());
         Role role = roleRepository.findByRoleName("ROLE_USER").get();
-
         Set<Role> roles = new HashSet<>();
         roles.add(role);
-
         user.setRoles(roles);
-
         userRepository.save(user);
-
         return "User Registered Successfully";
+    }
+
+    public String login(LoginRequest request) 
+    {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if(passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return "Login Success";
+        } else {
+            return "Invalid Password";
+        }
     }
 }

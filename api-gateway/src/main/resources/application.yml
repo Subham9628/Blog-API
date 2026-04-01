@@ -11,10 +11,15 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: user-services
+          uri: lb://USER-SERVICES
           predicates:
             - Path=/users/**
+
+        - id: auth-services
+          uri: lb://AUTH-SERVICES
+          predicates:
+            - Path=/auth/**
 
 eureka:
   client:

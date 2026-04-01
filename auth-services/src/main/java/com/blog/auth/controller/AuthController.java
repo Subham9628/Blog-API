@@ -17,11 +17,14 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest request) 
     {
-        authService.register(request);
-        return "register successful";
+    	   
+        return authService.register(request);
+     
     }
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
-        return "Login Success";
+    public String login(@RequestBody LoginRequest request) 
+    {
+    	    return authService.login(request);
+        
     }
 }
